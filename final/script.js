@@ -42,11 +42,11 @@ function setup() {
                 } else if (matrix[i][j] == 2) {
                     fill("orange");
                     rect(j * side, i * side, side, side);
-                } 
+                }
                 else if (matrix[i][j] == 0) {
                     fill("#acacac");
                     rect(j * side, i * side, side, side);
-                } 
+                }
                 else if (matrix[i][j] == 3) {
                     fill('red');
                     rect(j * side, i * side, side, side);

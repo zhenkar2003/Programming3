@@ -11,15 +11,16 @@ let random = require('./modules/random');
 //! Setting global arrays  --  START
 grassArr = [];
 grassEaterArr = [];
-devilArr = [];
-fireArr = [];
-waterArr = [];
+DevilArr = [];
+FireArr = [];
+WaterArr = [];
 matrix = [];
 grassHashiv = 0;
 grassEaterHashiv = 0;
 devilHashiv = 0;
 fireHashiv = 0;
 waterHashiv = 0;
+// seasontime = 0;
 //! Setting global arrays  -- END
 
 
@@ -58,8 +59,9 @@ function matrixGenerator(matrixSize, grass, grassEater,  devil, fire, water) {
         let customY = Math.floor(random(matrixSize));
         matrix[customY][customX] = 5;
     }
+    console.log(matrix);
 }
-matrixGenerator(20, 1, 1);
+matrixGenerator(20, 1, 1, 2, 3, 4);
 //! Creating MATRIX -- END
 
 
@@ -92,17 +94,17 @@ function creatingObjects() {
             }
             else if (matrix[y][x] == 3) {
                 var devil = new Devil(x, y);
-                devilArr.push(devil);
+                DevilArr.push(devil);
                 devilHashiv++;
             }
             else if (matrix[y][x] == 4) {
                 var fire = new Fire(x, y);
-                fireArr.push(fire);
+                FireArr.push(fire);
                 fireHashiv++;
             }
             else if (matrix[y][x] == 5) {
                 var water = new Water(x, y);
-                waterArr.push(water);
+                WaterArr.push(water);
                 waterHashiv++;
             }
         }
@@ -124,45 +126,45 @@ function game() {
             grassEaterArr[i].die();
         }
     }
-    if (devilArr[0] !== undefined) {
-        for (var i in devilArr) {
-            devilArr[i].eat();
-            devilArr[i].mul();
-            devilArr[i].move();
-            devilArr[i].die();
+    if (DevilArr[0] !== undefined) {
+        for (var i in DevilArr) {
+            DevilArr[i].eat();
+            DevilArr[i].mul();
+            DevilArr[i].move();
+            DevilArr[i].die();
         }
     }
-    if (fireArr[0] !== undefined) {
-        for (var i in fireArr) {
-            fireArr[i].eat();
-            fireArr[i].mul();
-            fireArr[i].move();
-            fireArr[i].die();
+    if (FireArr[0] !== undefined) {
+        for (var i in FireArr) {
+            FireArr[i].eat();
+            FireArr[i].mul();
+            // FireArr[i].move();
+            FireArr[i].die();
         }
     }
 
-    if (waterArr[0] !== undefined) {
-        for (var i in waterArr) {
-            waterArr[i].eat();
-            waterArr[i].mul();
-            waterArr[i].move();
-            waterArr[i].die();
+    if (WaterArr[0] !== undefined) {
+        for (var i in WaterArr) {
+            WaterArr[i].eat();
+            WaterArr[i].mul();
+            WaterArr[i].move();
+            WaterArr[i].die();
         }
-    }        
+    }
+        
 
     //! Object to send
     let sendData = {
         matrix: matrix,
         grassCounter: grassHashiv,
         grassEaterCounter: grassEaterHashiv,
-        fireArr: fireHashiv,
-        waterArr: waterHashiv
+        fireCounter: fireHashiv,
+        waterCounter: waterHashiv
     }
-
+console.log(sendData);
     //! Send data over the socket to clients who listens "data"
     io.sockets.emit("data", sendData);
 }
 
-
-
 setInterval(game, 1000)
+

@@ -2,10 +2,9 @@ var LiveForm = require("./LiveForm");
 var random = require("./random");
 
 module.exports = class Fire extends LiveForm {
-    constructor(x, y, index) {
-        this.x = x;
-        this.y = y;
-        this.index = index;
+    constructor(x, y) {
+        super(x, y);
+        this.index = 4;
         this.multiply = 0;
         this.energy = 15
      }

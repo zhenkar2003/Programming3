@@ -2,8 +2,9 @@ var LiveForm = require("./LiveForm");
 var random = require("./random.js");
 
 module.exports = class GrassEater extends LiveForm {
-    constructor(x, y, index){
-        super(x, y, index);
+    constructor(x, y){
+        super(x, y);
+        this.index = 2;
         this.energy = 8;
     }
     getNewCoordinates() {

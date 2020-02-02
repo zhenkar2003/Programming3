@@ -5,6 +5,7 @@ var random = require("./random");
 module.exports = class Grass extends LiveForm {
     constructor(x, y) {
         super(x, y);
+        this.index = 1;
         this.multiply = 0;
     }
     

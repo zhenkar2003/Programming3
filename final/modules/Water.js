@@ -1,11 +1,10 @@
 var LiveForm = require("./LiveForm");
 var random = require("./random");
 
-module.exports = class Sccharacter extends LiveForm{
-    constructor(x, y, index) {
-        this.x = x;
-        this.y = y;
-        this.index = index;
+module.exports = class Water extends LiveForm{
+    constructor(x, y) {
+        super(x, y);
+        this.index = 5;
         this.multiply = 0;
         this.energy = 25;
      }
@@ -27,8 +26,8 @@ module.exports = class Sccharacter extends LiveForm{
         var newCell = random(this.chooseCell(0));
 
         if (this.energy >= 28 && newCell) {
-            var newSccharacter = new Sccharacter(newCell[0], newCell[1], this.index);
-            SccharacterArr.push(newSccharacter);
+            var newWater = new Water(newCell[0], newCell[1], this.index);
+            WaterArr.push(newWater);
             matrix[newCell[1]][newCell[0]] = this.index;
             this.energy = 25;
         }
@@ -69,9 +68,9 @@ eat() {
           matrix[this.y][this.x] = 0;
           matrix[newY][newX] = this.index;
 
-          for (var i in FrcharacterArr) {
-                        if (newX == FrcharacterArr[i].x && newY == FrcharacterArr[i].y) {
-                            FrcharacterArr.splice(i, 1);
+          for (var i in FireArr) {
+                        if (newX == FireArr[i].x && newY == FireArr[i].y) {
+                            FireArr.splice(i, 1);
                             break;
                         }
                      }
@@ -98,9 +97,9 @@ die() {
 
     if (this.energy <= 0) {
         matrix[this.y][this.x] = 0;
-        for (var i in SccharacterArr) {
-            if (this.x == SccharacterArr[i].x && this.y == SccharacterArr[i].y){
-                SccharacterArr.splice(i, 1);
+        for (var i in WaterArr) {
+            if (this.x == SccharacterArr[i].x && this.y == WaterArr[i].y){
+                WaterArr.splice(i, 1);
             break;
             }
         }
