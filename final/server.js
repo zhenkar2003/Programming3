@@ -4,7 +4,9 @@ var GrassEater = require("./modules/GrassEater.js");
 var Devil = require("./modules/Devil.js");
 var Fire = require("./modules/Fire.js");
 var Water = require("./modules/Water.js");
+var Hogh = require("./modules/Hogh.js");
 let random = require('./modules/random');
+seasontime = 0;
 //! Requiring modules  --  END
 
 
@@ -14,20 +16,22 @@ grassEaterArr = [];
 DevilArr = [];
 FireArr = [];
 WaterArr = [];
+hoghArr = [];
 matrix = [];
 grassHashiv = 0;
 grassEaterHashiv = 0;
 devilHashiv = 0;
 fireHashiv = 0;
 waterHashiv = 0;
-// seasontime = 0;
+hoghHashiv = 0;
+
 //! Setting global arrays  -- END
 
 
 
 
 //! Creating MATRIX -- START
-function matrixGenerator(matrixSize, grass, grassEater,  devil, fire, water) {
+function matrixGenerator(matrixSize, grass, grassEater, devil, fire, water, hogh) {
     for (let i = 0; i < matrixSize; i++) {
         matrix[i] = [];
         for (let o = 0; o < matrixSize; o++) {
@@ -59,9 +63,13 @@ function matrixGenerator(matrixSize, grass, grassEater,  devil, fire, water) {
         let customY = Math.floor(random(matrixSize));
         matrix[customY][customX] = 5;
     }
-    console.log(matrix);
+    for (let i = 0; i < hogh; i++) {
+        let customX = Math.floor(random(matrixSize));
+        let customY = Math.floor(random(matrixSize));
+        matrix[customY][customX] = 6;
+    }
 }
-matrixGenerator(20, 1, 1, 2, 3, 4);
+matrixGenerator(20, 40, 43, 54, 67, 89, 50);
 //! Creating MATRIX -- END
 
 
@@ -86,7 +94,8 @@ function creatingObjects() {
             if (matrix[y][x] == 2) {
                 var grassEater = new GrassEater(x, y);
                 grassEaterArr.push(grassEater);
-            } 
+                grassEaterHashiv++;
+            }
             else if (matrix[y][x] == 1) {
                 var grass = new Grass(x, y);
                 grassArr.push(grass);
@@ -107,12 +116,35 @@ function creatingObjects() {
                 WaterArr.push(water);
                 waterHashiv++;
             }
+            else if (matrix[y][x] == 6) {
+                var hogh = new Hogh(x, y);
+                hoghArr.push(hogh);
+                hoghHashiv++;
+            }
         }
     }
 }
 creatingObjects();
 
 function game() {
+
+    seasontime++;
+    if (seasontime >= 0 && seasontime <= 10) {
+        season = "winter";
+    }
+    else if (seasontime >= 11 && seasontime <= 12) {
+        season = "spring";
+    }
+    else if (seasontime >= 13 && seasontime <= 15) {
+        season = "summer";
+    }
+    else if (seasontime >= 16 && seasontime <= 50) {
+        season = "autumn";
+    }
+    else {
+        seasontime = 0;
+    }
+
     if (grassArr[0] !== undefined) {
         for (var i in grassArr) {
             grassArr[i].mul();
@@ -138,7 +170,7 @@ function game() {
         for (var i in FireArr) {
             FireArr[i].eat();
             FireArr[i].mul();
-            // FireArr[i].move();
+            FireArr[i].move();
             FireArr[i].die();
         }
     }
@@ -151,19 +183,31 @@ function game() {
             WaterArr[i].die();
         }
     }
-        
+    if (hoghArr[0] !== undefined) {
+        for (var i in hoghArr) {
+            hoghArr[i].eat();
+            hoghArr[i].mul();
+            hoghArr[i].move();
+            hoghArr[i].die();
+        }
+    }
 
     //! Object to send
     let sendData = {
         matrix: matrix,
         grassCounter: grassHashiv,
         grassEaterCounter: grassEaterHashiv,
+        devilCounter: devilHashiv,
         fireCounter: fireHashiv,
-        waterCounter: waterHashiv
+        waterCounter: waterHashiv,
+        hoghCounter: hoghHashiv,
+        s: season
     }
-console.log(sendData);
+
     //! Send data over the socket to clients who listens "data"
     io.sockets.emit("data", sendData);
+
+
 }
 
 setInterval(game, 1000)

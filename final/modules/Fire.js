@@ -89,7 +89,24 @@ module.exports = class Fire extends LiveForm {
             this.energy = 15;
         }
     }
+    move() {
 
+        var newCell = random(this.chooseCell(0));
+    
+        if (newCell) {
+            var newX = newCell[0];
+            var newY = newCell[1];
+    
+            matrix[this.y][this.x] = 0;
+            matrix[newY][newX] = this.index;
+    
+    
+            this.y = newY;
+            this.x = newX;
+            this.energy--;
+    
+        }
+    }
 
 die() {
 

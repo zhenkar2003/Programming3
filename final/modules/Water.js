@@ -98,7 +98,7 @@ die() {
     if (this.energy <= 0) {
         matrix[this.y][this.x] = 0;
         for (var i in WaterArr) {
-            if (this.x == SccharacterArr[i].x && this.y == WaterArr[i].y){
+            if (this.x == WaterArr[i].x && this.y == WaterArr[i].y){
                 WaterArr.splice(i, 1);
             break;
             }
