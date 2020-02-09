@@ -206,9 +206,23 @@ function game() {
 
     //! Send data over the socket to clients who listens "data"
     io.sockets.emit("data", sendData);
-
-
 }
+
+
+
+// addEventListener("click", go_to_add())
+// function go_to_add(){
+    
+// }
+
+// function go_to_add(){
+
+// }
+let AddCharacter = {
+    characteradder: grass
+}
+
+io.sockets.emit("add" , AddCharacter)
 
 setInterval(game, 1000)
 

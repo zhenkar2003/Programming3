@@ -55,9 +55,9 @@ module.exports = class Hogh extends LiveForm {
             matrix[this.y][this.x] = 0;
             matrix[newY][newX] = this.index;
 
-            for (var i in FireArr) {
-                if (newX == FireArr[i].x && newY == FireArr[i].y) {
-                    FireArr.splice(i, 1);
+            for (var i in WaterArr) {
+                if (newX == WaterArr[i].x && newY == WaterArr[i].y) {
+                    WaterArr.splice(i, 1);
                     break;
                 }
             }

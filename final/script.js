@@ -206,5 +206,27 @@ function setup() {
         }
     }
 }
+var clickCount = 0;
+function clickHandler(evt){
+   clickCount++;
+   console.log(evt);
+   var str = "Added character " + clickCount;
+   this.innerText = str;
+}
+
+var add = document.getElementById("Addcharacter");
+add.addEventListener("click", clickHandler);
+
+// document.getElementById('Addcharacter').onclick = go_to_add() {
+    
+// }​;​
+
+var addgrass = document.getElementById('Addcharacter');
+
+socket.on("add", go_to_add);
+
+function go_to_add(add){
+   addgrass = add.grass
+}
 
 }
